@@ -1,0 +1,5 @@
+Think.Core = http://neptune.li/code_management/Think/CSharp/Think.Core
+Think.WinPhone = http://neptune.li/code_management/Think/CSharp/Think.WinPhone
+Think.WinPhone.UnitTest = http://neptune.li/code_management/Think/CSharp/Think.WinPhone.UnitTest
+Think.WinStore = http://neptune.li/code_management/Think/CSharp/Think.WinStore
+Think.WinStore.UnitTest = http://neptune.li/code_management/Think/CSharp/Think.WinStore.UnitTest

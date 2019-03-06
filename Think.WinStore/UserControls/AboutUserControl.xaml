@@ -1,0 +1,55 @@
+﻿<UserControl
+	x:Class="Think.WinStore.UserControls.AboutUserControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:Think.WinStore"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	d:DesignHeight="768"
+	d:DesignWidth="346">
+	    
+	
+	        <!-- About Panel Content -->
+            <Grid Grid.Row="1" Margin="0,0,0,20" >
+	            <Grid.Transitions>
+	                <TransitionCollection>
+	                    <EntranceThemeTransition FromHorizontalOffset="120" />
+	                </TransitionCollection>
+	            </Grid.Transitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />             
+                </Grid.RowDefinitions>
+
+                <!--App Info-->
+                <StackPanel Margin="30,0,17,0" Orientation="Vertical" Grid.Row="0">
+                    <TextBlock HorizontalAlignment="Center" Text="{StaticResource AppName}" Style="{StaticResource ThinkAppPageHeaderTextStyle}" FontSize="50" />
+
+                    <TextBlock x:Uid="AboutCaption" HorizontalAlignment="Center" Text="An app to make you think every day." TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Normal" Margin="0,-25,0,0" FontSize="18" />
+
+                    <TextBlock x:Uid="AboutMessage" TextWrapping="Wrap" Text="This app was made for fun. At the time of publication there were 700 unique quotes on our servers and plans to increase to 1000 before launching the third version. Please report any bug, error or strange behavior." Margin="0,20,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                    <HyperlinkButton NavigateUri="mailto:suport-think@neptune.li" Content="suport-think@neptune.li" Margin="0,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="14" />
+
+                    <TextBlock x:Uid="AboutPrivacy" Text="Here, read our Privacy Statement" FontFamily="Segoe UI" FontWeight="SemiLight" Margin="0, 20, 0, 0" FontSize="12" />
+                    <HyperlinkButton  x:Uid="AboutPrivacyLink" NavigateUri="http://neptune.li/think/PrivacyStatement.html" Content="Privacy Statement" Margin="0,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="14" />
+
+                </StackPanel>
+                
+                <!--Dev Info-->
+                <StackPanel Margin="30,0,17,0" Orientation="Vertical" Grid.Row="1" VerticalAlignment="Bottom" >
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,0,0,15" >
+                        <TextBlock  x:Uid="AboutVisitUs" Text="Visit Us" HorizontalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="15" />
+                        <HyperlinkButton NavigateUri="http://thinkapp.me" Content="Site: thinkapp.me" HorizontalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="15" />
+                        <HyperlinkButton NavigateUri="http://www.facebook.com/thinkapp" Content="Facebook: /thinkapp" HorizontalAlignment="Center" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="15" />
+                    </StackPanel>
+                    
+                    <TextBlock  x:Uid="AboutRafaelCredits" Text="Code by Rafael Rabelo Itajubá" Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                    <HyperlinkButton NavigateUri="mailto:rafael.rabelo.it@gmail.com" Content="rafael.rabelo.it@gmail.com" Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                    <TextBlock x:Uid="AboutLaisCredits" Text="Design by Lais Munhoz Mastelari" Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                    <HyperlinkButton NavigateUri="mailto:lais.mm@gmail.com" Content="lais.mm@gmail.com" Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                    <TextBlock x:Uid="AboutProducedOn"  Text="Produced on LTIA - UNESP Bauru - São Paulo - Brazil" Margin="10,15,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" FontSize="12" />
+                </StackPanel>
+	        </Grid>
+            
+</UserControl>

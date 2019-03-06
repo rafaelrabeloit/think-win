@@ -1,0 +1,486 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="Think.WinStore.GroupedItemsPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Think.WinStore"
+    xmlns:data="using:Think.WinStore.Data"
+    xmlns:common="using:Think.WinStore.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <common:LayoutAwarePage.Resources>
+
+        <local:ConverterDisplaySize x:Key="ConverterDisplaySize"/>
+
+        <local:ConverterGridMetrics x:Key="ConverterGridMetrics"/>
+
+
+        <DataTemplate x:Name="QuoteTemplate" >
+            <!-- -->
+            <Grid Background="{Binding SColor, Mode=TwoWay}" Margin="0" Width="{Binding WSize, Converter={StaticResource ConverterGridMetrics}}"  Height="{Binding HSize, Converter={StaticResource ConverterGridMetrics}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding Quote}" Grid.Row="0" TextWrapping="Wrap"
+				Margin="10,10,10,0" TextTrimming="WordEllipsis" HorizontalAlignment="Left" Style="{StaticResource ThinkItemTextStyle}"/>
+
+
+                <StackPanel Grid.Row="1" >
+                    <TextBlock Text="{Binding Autor}" TextWrapping="NoWrap" Margin="0,0,15,15"
+					TextTrimming="WordEllipsis" HorizontalAlignment="Right" Style="{StaticResource ThinkTitleTextStyle}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        
+        <!--
+            Collection of grouped items displayed by this page, bound to a subset
+            of the complete item list because items in groups cannot be virtualized
+        -->
+        <CollectionViewSource
+            x:Name="groupedItemsViewSource"
+            Source="{Binding ThinkDataSource.AllGroups}"
+            IsSourceGrouped="true"
+            ItemsPath="TopItems"
+            d:Source="{Binding AllGroups, Source={d:DesignInstance IsDesignTimeCreatable=True, Type=data:ThinkDataSource}}"/>
+
+    </common:LayoutAwarePage.Resources>
+
+
+    <Page.BottomAppBar>
+        <AppBar x:Name="bottomAppBar" >
+            <Grid  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                
+                <!--Citação Aleatoria-->
+                <Button x:Name="shuffleButton" x:Uid="GroupedRandomQuote" Grid.Column="0" HorizontalAlignment="Left" Click="shuffleButton_Click" Visibility="Visible"
+                    Style="{StaticResource ShuffleAppBarButtonStyle}"/>
+                
+                <!--Recebe nova-->
+                <Button x:Name="syncButton" x:Uid="GroupedGetNewQuote" Grid.Column="1" HorizontalAlignment="Left" Click="syncButton_Click" Visibility="Visible"
+                    Style="{StaticResource SyncAppBarButtonStyle}"/>
+
+                <!--Recebe novas citações não lidas-->
+                <Button x:Name="refreshButton" x:Uid="GroupedDownloadUnreadQuotes" Grid.Column="2" HorizontalAlignment="Left" Click="refreshButton_Click" Visibility="Visible"
+                    Style="{StaticResource RefreshAppBarButtonStyle}"/>
+                
+                <!--Nova citação? Não. Download tudo-->
+                <Button x:Name="downloadButton" x:Uid="GroupedDownloadAllQuotes" Grid.Column="4" HorizontalAlignment="Left" Click="downloadButton_Click" Visibility="Visible"
+                    Style="{StaticResource DownloadAppBarButtonStyle}"/>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{Binding BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" x:Name="ThinkImageHeader" Source="ms-appx:///Assets/Images/ThinkImageHeader.png" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,30,0" Stretch="UniformToFill" Width="276" />
+
+        <Image Grid.Row="1" x:Name="ThinkImageBottom" Source="ms-appx:///Assets/Images/ThinkImageBottom.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="UniformToFill" Height="278" Width="405" />
+        
+        
+        <SemanticZoom x:Name="zoomItemLandscape" Padding="0" Grid.RowSpan="2" Margin="0" Visibility="Visible">
+
+            <SemanticZoom.ZoomedInView>
+                <local:VariableGridView
+                    x:Name="itemGridView"
+                    AutomationProperties.AutomationId="ItemGridView"
+                    AutomationProperties.Name="Grouped Items"
+                    Padding="116,137,40,46"
+                    Margin="0"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                    ItemTemplate="{StaticResource QuoteTemplate}"
+                    IsItemClickEnabled="True"
+                    SelectionMode="None"
+                    ItemClick="ItemView_ItemClick">
+
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="1,0,0,6">
+                                        <Button
+                                            AutomationProperties.Name="Group Title"
+                                            Click="Header_Click"
+                                            Style="{StaticResource TextPrimaryButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource ThinkGroupHeaderTextStyle}" />
+                                                <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource ThinkGroupHeaderTextStyle}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Orientation="Vertical" ItemHeight="{StaticResource ItemSize}" ItemWidth="{StaticResource ItemSize}" Margin="0,0,80,0" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </local:VariableGridView>
+            </SemanticZoom.ZoomedInView>
+
+            <SemanticZoom.ZoomedOutView>
+
+                <GridView
+                    x:Name="groupedGridView"
+                    AutomationProperties.AutomationId="GroupedGridView"
+                    AutomationProperties.Name="Groups"
+                    Padding="116,137,40,46"
+                    SelectionMode="None">
+
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Height="55" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Margin="10,0,10,0">
+                                <TextBlock Text="{Binding Group.Title}" Style="{StaticResource ThinkGroupHeaderTextStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+
+            </SemanticZoom.ZoomedOutView>
+
+        </SemanticZoom>
+
+
+        <SemanticZoom x:Name="zoomItemPortrait" Padding="0" Visibility="Collapsed"  Margin="0" Grid.RowSpan="2">
+
+            <SemanticZoom.ZoomedInView>
+                <local:VariableGridView
+                    
+                    x:Name="itemGridViewPortrait"
+                    AutomationProperties.AutomationId="ItemGridView"
+                    AutomationProperties.Name="Grouped Items"
+                    
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollMode="Auto"
+                    
+                    SelectionMode="None"
+                    Margin="0,137,0,0"
+                    Padding="96,0,10,56"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+                    ItemTemplate="{StaticResource QuoteTemplate}"
+                                       
+                    IsItemClickEnabled="True"
+                    ItemClick="ItemView_ItemClick">
+
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    
+
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="1,0,0,6">
+                                        <Button
+                                            AutomationProperties.Name="Group Title"
+                                            Click="Header_Click"
+                                            Style="{StaticResource TextPrimaryButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource ThinkGroupHeaderTextStyle}" />
+                                                <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource ThinkGroupHeaderTextStyle}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Width="{Binding ConverterParameter=FullPortrait, Converter={StaticResource ConverterDisplaySize}}" Orientation="Horizontal" ItemHeight="{StaticResource ItemSize}" ItemWidth="{StaticResource ItemSize}" Margin="0,0,0,80" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </local:VariableGridView>
+            </SemanticZoom.ZoomedInView>
+
+            <SemanticZoom.ZoomedOutView>
+
+                <GridView
+                    x:Name="groupedGridViewPortrait"
+                    AutomationProperties.AutomationId="GroupedGridView"
+                    AutomationProperties.Name="Groups"
+                    Margin="0,137,0,0"
+                    Padding="96,0,10,56"
+                    
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollMode="Auto"
+                    
+                    SelectionMode="None">
+
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Center" Margin="0,10,0,10">
+                                <TextBlock Text="{Binding Group.Title}" Style="{StaticResource ThinkGroupHeaderTextStyle}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+
+            </SemanticZoom.ZoomedOutView>
+
+        </SemanticZoom>
+
+        <!-- Vertical scrolling list only used when snapped -->
+        <ListView
+            x:Name="itemListView"
+            AutomationProperties.AutomationId="ItemListView"
+            AutomationProperties.Name="Grouped Items"
+            Grid.Row="1"
+            Visibility="Collapsed"
+            Margin="0,-10,0,0"
+            Padding="10,0,0,60"
+            ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}"
+            ItemTemplate="{StaticResource QuoteSnappedTemplate}"
+            SelectionMode="None"
+            IsSwipeEnabled="false"
+            IsItemClickEnabled="True"
+            ItemClick="ItemView_ItemClick">
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Margin="7,7,0,0">
+                                <Button
+                                    AutomationProperties.Name="Group Title"
+                                    Click="Header_Click"
+                                    Style="{StaticResource TextPrimaryButtonStyle}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource ThinkGroupHeaderTextStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource ThinkGroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+
+
+        <!-- MENSAGEM ERRO SEM ITEMS -->
+        <TextBlock
+            Grid.Row="1"
+            x:Uid="GroupedErrorNoItems"
+            x:Name="noItemsTextBlock"
+            Margin="120,0,0,0"
+            Visibility="Collapsed"
+            Style="{StaticResource SubheaderTextStyle}"
+            VerticalAlignment="Top"
+            Foreground="Red"
+            Text="You don't have any Quotes." />
+        <!-- /MENSAGEM ERRO SEM ITEMS -->
+
+
+        <!-- MENSAGEM ERRO SEM ITEMS -->
+        <TextBlock
+            Grid.Row="1"
+            x:Uid="GroupedErrorCorruptedXML"
+            x:Name="corruptedXMLErrorTextBlock"
+            TextWrapping="Wrap"
+            Margin="120,0,0,30"
+            Visibility="Collapsed"
+            Style="{StaticResource SubheaderTextStyle}"
+            VerticalAlignment="Bottom"
+            Foreground="Red"
+            Text="Ouch! Your local data was corrupted. You will have to download it again using the Restore Data from Server option in the App Bar." />
+        <!-- /MENSAGEM ERRO SEM ITEMS -->
+
+        <!-- MENSAGEM ERRO SEM INTERNET -->
+        <TextBlock
+            Grid.Row="1"
+            x:Name="noInternetTextBlock"
+            x:Uid="GroupedErrorNoInternet"
+            Margin="120,0,0,30"
+            Visibility="Collapsed"
+            Style="{StaticResource SubheaderTextStyle}"
+            VerticalAlignment="Bottom"
+            Foreground="Red"
+            Text="Woops. Failed to connect to Internet." />
+        <!-- /MENSAGEM ERRO SEM INTERNET -->
+        
+        
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Grid.Column="1" IsHitTestVisible="false" Style="{StaticResource ThinkAppPageHeaderTextStyle}"/>
+            <ProgressRing x:Name="progressRing" HorizontalAlignment="Left" Margin="20" Grid.Column="2" Width="60" Height="60" />
+            <!--<Image x:Name="pageTitle" Source="ms-appx:///Assets/Images/HeaderLogo.png" Height="60" Grid.Column="1" HorizontalAlignment="Left" />-->
+
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="zoomItemLandscape" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="zoomItemPortrait" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!--
+                    The back button and title have different styles when snapped, and the list representation is substituted
+                    for the grid displayed in all other view states
+                -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ThinkAppSnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="zoomItemLandscape" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="downloadButton" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ThinkImageHeader" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="138"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ThinkImageHeader" Storyboard.TargetProperty="Height">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="65"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ThinkImageBottom" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="202"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ThinkImageBottom" Storyboard.TargetProperty="Height">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="139"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+
+            <!-- Groups - GridView e ListView -->
+            <VisualStateGroup x:Name="AllGroupsState">
+                <!-- All Groups have no items -->
+                <VisualState x:Name="AllHaveNoItems">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noItemsTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                    </Storyboard>
+                </VisualState>
+
+                <VisualState x:Name="AllHaveItems">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noItemsTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <!-- Groups - GridView e ListView -->
+
+            <!-- Internet Error -->
+            <VisualStateGroup x:Name="ErrorState">
+                <VisualState x:Name="InternetError">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noInternetTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- All Groups have no items -->
+                <VisualState x:Name="CorruptedXMLError">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="corruptedXMLErrorTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>                        
+                    </Storyboard>
+                </VisualState>
+
+                <!-- All Groups have no items -->
+                <VisualState x:Name="NoError">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="corruptedXMLErrorTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noInternetTextBlock" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+            <!-- /Internet Error -->
+
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</common:LayoutAwarePage>

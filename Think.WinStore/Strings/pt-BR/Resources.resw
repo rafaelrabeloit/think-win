@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="AboutCaption.Text" xml:space="preserve">
+    <value>Uma app para fazer você pensar todos os dias.</value>
+  </data>
+  <data name="AboutLaisCredits.Text" xml:space="preserve">
+    <value>Design por Lais Munhoz Mastelari</value>
+  </data>
+  <data name="AboutMessage.Text" xml:space="preserve">
+    <value>Esta app foi feita por diversão. 
+Na data de sua publicação haviam 700 citações únicas em nossos servidores e planos para aumentar para 1000 antes do lançamento da terceira versão. 
+Por favor, reporte qualquer bug, erro ou comportamento estranho.
+Agradecemos vocês pelos Reviews! Estamos sempre melhorando graças a vocês.</value>
+  </data>
+  <data name="AboutPrivacy.Text" xml:space="preserve">
+    <value>Aqui, leia nossa Declaração de Privacidade</value>
+  </data>
+  <data name="AboutPrivacyLink.Content" xml:space="preserve">
+    <value>Declaração de Privacidade</value>
+  </data>
+  <data name="AboutProducedOn.Text" xml:space="preserve">
+    <value>Produzida no LTIA - UNESP Bauru - São Paulo - Brasil</value>
+  </data>
+  <data name="AboutRafaelCredits.Text" xml:space="preserve">
+    <value>Código por Rafael Rabelo Itajubá</value>
+  </data>
+  <data name="AboutTitle.Text" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="AboutVisitUs.Text" xml:space="preserve">
+    <value>Visite-nos</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Diariamente</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Escuro</value>
+  </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>Favoritos</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="GroupedDownloadAllQuotes.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Baixar todas</value>
+  </data>
+  <data name="GroupedDownloadUnreadQuotes.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Atualizar</value>
+  </data>
+  <data name="GroupedErrorCorruptedXML" xml:space="preserve">
+    <value>Ai! Seus dados locais from corrompidos. Você terá que baixá-los de novo usando a opção de Restaurar Dados do Servidor na App Bar.</value>
+  </data>
+  <data name="GroupedErrorNoInternet.Text" xml:space="preserve">
+    <value>Ops. Falha ao conectar à Internet.</value>
+  </data>
+  <data name="GroupedErrorNoItems.Text" xml:space="preserve">
+    <value>Você não possui nenhuma Citação.</value>
+  </data>
+  <data name="GroupedGetNewQuote.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pegar nova</value>
+  </data>
+  <data name="GroupedRandomQuote.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Ir para aleatória</value>
+  </data>
+  <data name="HalfHour" xml:space="preserve">
+    <value>Meia Hora</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="ItemCopy.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="ItemFavorite.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Marcar favorita</value>
+  </data>
+  <data name="ItemPin.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="ItemUnFavorite.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tirar favorita</value>
+  </data>
+  <data name="ItemUnPin.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Unpin</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="Orange" xml:space="preserve">
+    <value>Laranja</value>
+  </data>
+  <data name="Preferences" xml:space="preserve">
+    <value>Preferências</value>
+  </data>
+  <data name="PreferencesApplyToAll.Content" xml:space="preserve">
+    <value>Aplicar esta Cor para Todas as Citações agora</value>
+  </data>
+  <data name="PreferencesClearAll.Content" xml:space="preserve">
+    <value>Limpar todas as citações</value>
+  </data>
+  <data name="PreferencesClearRecents.Content" xml:space="preserve">
+    <value>Limpar Recentes</value>
+  </data>
+  <data name="PreferencesErrorRestart" xml:space="preserve">
+    <value>É necessário reiniciar a app.</value>
+  </data>
+  <data name="PreferencesFeedbackUpdateStart" xml:space="preserve">
+    <value>Atualizações Iniciadas.</value>
+  </data>
+  <data name="PreferencesFeedbackUpdateStop" xml:space="preserve">
+    <value>Atualizações Paradas.</value>
+  </data>
+  <data name="PreferencesMessageColor.Text" xml:space="preserve">
+    <value>Mudar a Cor de Citações novas</value>
+  </data>
+  <data name="PreferencesMessageLanguage.Text" xml:space="preserve">
+    <value>Mude o Idioma das Citações novas</value>
+  </data>
+  <data name="PreferencesMessageTheme.Text" xml:space="preserve">
+    <value>Mudar o Tema da Aplicação</value>
+  </data>
+  <data name="PreferencesMessageUpdate.Text" xml:space="preserve">
+    <value>Mudar quando recebe atualizações</value>
+  </data>
+  <data name="PreferencesTitle.Text" xml:space="preserve">
+    <value>Preferências</value>
+  </data>
+  <data name="PreferencesUpdateToggle.Header" xml:space="preserve">
+    <value>Receber Atualizações</value>
+  </data>
+  <data name="Purple" xml:space="preserve">
+    <value>Roxo</value>
+  </data>
+  <data name="Recents" xml:space="preserve">
+    <value>Recentes</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Vermelho</value>
+  </data>
+  <data name="SearchAllFilter" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="SearchErrorNoResults.Text" xml:space="preserve">
+    <value>Nenhum resultado para sua pesquisa.</value>
+  </data>
+  <data name="SearchResultMessage.Text" xml:space="preserve">
+    <value>Resultados para </value>
+  </data>
+  <data name="ShareAppMessageContent" xml:space="preserve">
+    <value>Eu estou usando este ótimo app para ler Citações de grandes Pensadores!</value>
+  </data>
+  <data name="ShareAppMessageDescription" xml:space="preserve">
+    <value>Compartilhe o Think com todo mundo.</value>
+  </data>
+  <data name="ShareQuoteMessageDescription" xml:space="preserve">
+    <value>Compartilhado por Think para Windows 8</value>
+  </data>
+  <data name="SixHour" xml:space="preserve">
+    <value>Seis horas</value>
+  </data>
+  <data name="TwelveHour" xml:space="preserve">
+    <value>Doze horas</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Amarelo</value>
+  </data>
+</root>
